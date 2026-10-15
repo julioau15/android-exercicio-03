@@ -1,7 +1,6 @@
 package com.aulasandroid.quizgame
 
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +19,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.aulasandroid.quizgame.QuizFormScreen.QuizFormScreen
-import com.aulasandroid.quizgame.QuizFormScreen.QuizFormScreenViewModel
 import com.aulasandroid.quizgame.QuizHomeScreen.QuizHomeScreen
 import com.aulasandroid.quizgame.QuizResultScreen.QuizResultScreen
 import com.aulasandroid.quizgame.ui.theme.QuizGameTheme
@@ -33,7 +31,6 @@ class MainActivity : ComponentActivity() {
             QuizGameTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
-                    val viewModel: QuizFormScreenViewModel = viewModel()
 
                     NavHost(
                         navController = navController,
@@ -77,10 +74,24 @@ class MainActivity : ComponentActivity() {
 
                         }
 
-                        composable(route = "result"){
+                        composable(
+                            route = "result/{nome}/{acertos}",
+                            arguments = listOf(
+                                navArgument(name = "nome"){
+                                    type = NavType.StringType
+                                },
+                                navArgument(name = "acertos"){
+                                    type = NavType.IntType
+                                }
+                            )
+                            ){
+                            val nome = it.arguments?.getString("nome")
+                            val acertos = it.arguments?.getInt("acertos")
                             QuizResultScreen(
                                 modifier = Modifier.padding(innerPadding),
-                                navController = navController
+                                navController = navController,
+                                nome = nome!!,
+                                acertos = acertos!!
                             )
                         }
                     }

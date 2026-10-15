@@ -24,10 +24,16 @@ import androidx.navigation.NavController
 import com.aulasandroid.quizgame.components.QuizImagem
 
 @Composable
-fun QuizResultScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun QuizResultScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    nome: String = "",
+    acertos: Int = 0
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(0.dp, 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)
@@ -49,22 +55,24 @@ fun QuizResultScreen(modifier: Modifier = Modifier, navController: NavController
                 border = BorderStroke(1.dp,Color.Black)
             ) {
                 Text(
-                    text = "Bom trabalho!",
+                    text = "Bom trabalho $nome!",
                     fontSize = 20.sp,
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(60.dp, 10.dp)
                 )
             }
 
             Text(
-                text = "Você acertou 1 de 3 perguntas",
-                fontSize = 20.sp
+                text = "Você acertou $acertos de 3 perguntas",
+                fontSize = 20.sp,
+                color = Color.Black
                 )
         }
 
         Button(
             onClick = {
-                navController.navigate("form")
+                navController.navigate("form/$nome")
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Yellow

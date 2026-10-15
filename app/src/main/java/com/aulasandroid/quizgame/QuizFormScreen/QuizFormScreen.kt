@@ -44,43 +44,53 @@ fun QuizFormScreen(
     ) {
         Text(
             text = "Boa sorte $nome!",
+            color = Color.Black,
             fontSize = 20.sp,
             fontWeight = FontWeight.Black
         )
 
         QuizImagem(Modifier.size(50.dp))
 
-        CardPergunta("$contadorPerguntas")
-
-        CardFormulario(
-            pergunta = "Qual a capital da Franca?",
-            alternativa1 = "Londres",
-            alternativa2 = "Berlim",
-            alternativa3 = "Paris",
-            alternativa4 = "Madri",
-            alternativaCerta = "Paris",
-            viewModel = viewModel
+        CardPergunta(
+            numPergunta = if (contadorPerguntas > 3)  "3" else "$contadorPerguntas"
         )
 
-        CardFormulario(
-            pergunta = "Qual planeta é conhecido como planeta vermelho?",
-            alternativa1 = "Vênus",
-            alternativa2 = "Marte",
-            alternativa3 = "Jupiter",
-            alternativa4 = "Saturno",
-            alternativaCerta = "marte",
-            viewModel = viewModel
-        )
+        when(contadorPerguntas){
+            1 ->
+                CardFormulario(
+                    pergunta = "Qual a capital da Franca?",
+                    alternativa1 = "Londres",
+                    alternativa2 = "Berlim",
+                    alternativa3 = "Paris",
+                    alternativa4 = "Madri",
+                    alternativaCerta = "Paris",
+                    viewModel = viewModel
+                )
 
-        CardFormulario(
-            pergunta = "Qual a capital da Austrália?",
-            alternativa1 = "Camberra",
-            alternativa2 = "Berlim",
-            alternativa3 = "Moscou",
-            alternativa4 = "Madri",
-            alternativaCerta = "Paris",
-            viewModel = viewModel
-        )
+            2 ->
+                CardFormulario(
+                    pergunta = "Qual planeta é conhecido como planeta vermelho?",
+                    alternativa1 = "Vênus",
+                    alternativa2 = "Marte",
+                    alternativa3 = "Jupiter",
+                    alternativa4 = "Saturno",
+                    alternativaCerta = "marte",
+                    viewModel = viewModel
+                )
 
+            3 ->
+                CardFormulario(
+                    pergunta = "Qual a capital da Austrália?",
+                    alternativa1 = "Camberra",
+                    alternativa2 = "Berlim",
+                    alternativa3 = "Moscou",
+                    alternativa4 = "Madri",
+                    alternativaCerta = "Camberra",
+                    viewModel = viewModel
+                )
+
+            else ->
+                navController.navigate("result/$nome/${viewModel.contadorAcertos.value}")
+        }
     }
 }

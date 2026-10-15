@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,15 +49,30 @@ fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController) 
 
         Text(
             text = "QUIZATRON 3000",
-            fontSize = 35.sp
+            fontSize = 35.sp,
+            color = Color.Black
         )
 
         OutlinedTextField(
             value = nome,
             onValueChange = {nome = it},
             shape = RoundedCornerShape(20.dp),
-            placeholder = {Text("Digite o seu nome: ")},
-            label = {Text("Qual o seu nome?")}
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
+            ),
+            placeholder = {
+                Text(
+                text = "Digite o seu nome: ",
+                color = Color.Black
+                )
+            },
+            label = {
+                Text(
+                    text = "Qual o seu nome?",
+                    color = Color.Black
+                )
+            }
         )
 
         Button(
@@ -72,7 +88,8 @@ fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController) 
             }
         ) {
             Text(
-                text = "COMEÇAR!"
+                text = "COMEÇAR!",
+                color = Color.Black
             )
         }
 

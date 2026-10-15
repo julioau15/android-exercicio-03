@@ -23,6 +23,7 @@ fun CardPergunta (numPergunta: String) {
         Text(
             text = "Pergunta $numPergunta de 3",
             fontSize = 20.sp,
+            color = Color.Black,
             modifier = Modifier
                 .padding(20.dp, 10.dp)
         )

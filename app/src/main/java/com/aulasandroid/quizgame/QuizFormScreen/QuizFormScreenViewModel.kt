@@ -4,6 +4,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class QuizFormScreenViewModel: ViewModel() {
     private val _contadorPerguntas = MutableLiveData<Int>(1)
@@ -37,12 +41,18 @@ class QuizFormScreenViewModel: ViewModel() {
             incrementarContadorAcertos()
         }
 
-        incrementarContadorPerguntas()
+        viewModelScope.launch {
+            delay(500.milliseconds)
+
+            incrementarContadorPerguntas()
+
+            _alternativaSelecionada.value = null
+            _respostaCorreta.value = null
+        }
     }
 
     fun incrementarContadorPerguntas () {
-        if(_contadorPerguntas.value != 3)
-            _contadorPerguntas.value = _contadorPerguntas.value!! + 1
+        _contadorPerguntas.value = _contadorPerguntas.value!! + 1
     }
 
     fun incrementarContadorAcertos () {

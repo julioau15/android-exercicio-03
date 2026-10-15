@@ -1,6 +1,7 @@
-package com.aulasandroid.quizgame.screens
+package com.aulasandroid.quizgame.QuizResultScreen
 
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -16,12 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.aulasandroid.quizgame.components.QuizImagem
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun QuizResultScreen(modifier: Modifier = Modifier) {
+fun QuizResultScreen(modifier: Modifier = Modifier, navController: NavController) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -42,25 +45,37 @@ fun QuizResultScreen(modifier: Modifier = Modifier) {
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = Color.Green
-                )
+                ),
+                border = BorderStroke(1.dp,Color.Black)
             ) {
                 Text(
                     text = "Bom trabalho!",
+                    fontSize = 20.sp,
                     modifier = Modifier
                         .padding(60.dp, 10.dp)
                 )
             }
 
-            Text("Você acertou 1 de 3 perguntas")
+            Text(
+                text = "Você acertou 1 de 3 perguntas",
+                fontSize = 20.sp
+                )
         }
 
         Button(
-            onClick = {}
+            onClick = {
+                navController.navigate("form")
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Yellow
+            ),
+            border = BorderStroke(1.dp,Color.Black)
         ) {
             Text(
-                text = "JOGAR NOVAMENTE"
+                text = "JOGAR NOVAMENTE",
+                color = Color.Black,
+                fontSize = 20.sp
             )
         }
     }
-
 }

@@ -1,7 +1,6 @@
-package com.aulasandroid.quizgame.screens
+package com.aulasandroid.quizgame.QuizHomeScreen
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,15 +21,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.aulasandroid.quizgame.R
+import androidx.navigation.NavController
+import com.aulasandroid.quizgame.components.QuizImagem
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun QuizHomeScreen(modifier: Modifier = Modifier) {
+fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController) {
     var nome by remember {
         mutableStateOf("")
     }
@@ -70,7 +67,9 @@ fun QuizHomeScreen(modifier: Modifier = Modifier) {
                 contentColor = Color.Black
             ),
             border = BorderStroke(1.dp, Color.Black),
-            onClick = {}
+            onClick = {
+                navController.navigate("form/$nome")
+            }
         ) {
             Text(
                 text = "COMEÇAR!"
@@ -78,13 +77,4 @@ fun QuizHomeScreen(modifier: Modifier = Modifier) {
         }
 
     }
-}
-
-@Composable
-fun QuizImagem (modifier: Modifier){
-    Image(
-        painterResource(R.drawable.quiz),
-        contentDescription = "logo quiz",
-        modifier = modifier
-    )
 }

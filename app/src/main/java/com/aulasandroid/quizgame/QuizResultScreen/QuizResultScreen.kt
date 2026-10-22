@@ -15,21 +15,25 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aulasandroid.quizgame.Session.SessionViewModel
 import com.aulasandroid.quizgame.components.QuizImagem
 
 @Composable
 fun QuizResultScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    nome: String = "",
+    sessionViewModel: SessionViewModel,
     acertos: Int = 0
 ) {
+    val userName by sessionViewModel.userName.observeAsState("")
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -55,7 +59,7 @@ fun QuizResultScreen(
                 border = BorderStroke(1.dp,Color.Black)
             ) {
                 Text(
-                    text = "Bom trabalho $nome!",
+                    text = "Bom trabalho $userName!",
                     fontSize = 20.sp,
                     color = Color.Black,
                     modifier = Modifier
@@ -72,7 +76,7 @@ fun QuizResultScreen(
 
         Button(
             onClick = {
-                navController.navigate("form/$nome")
+                navController.navigate("form")
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Yellow

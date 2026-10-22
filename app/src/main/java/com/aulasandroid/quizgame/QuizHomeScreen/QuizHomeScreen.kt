@@ -1,5 +1,6 @@
 package com.aulasandroid.quizgame.QuizHomeScreen
 
+import android.R.string.no
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -25,13 +27,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aulasandroid.quizgame.Session.SessionViewModel
 import com.aulasandroid.quizgame.components.QuizImagem
 
 @Composable
-fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController) {
-    var nome by remember {
-        mutableStateOf("")
-    }
+fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController, sessionViewModel: SessionViewModel) {
+    val userName by sessionViewModel.userName.observeAsState("")
 
     Column(
         modifier = modifier
@@ -54,8 +55,8 @@ fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController) 
         )
 
         OutlinedTextField(
-            value = nome,
-            onValueChange = {nome = it},
+            value = userName,
+            onValueChange = { sessionViewModel.onUserNameChange(it) },
             shape = RoundedCornerShape(20.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.Black,
@@ -84,7 +85,7 @@ fun QuizHomeScreen(modifier: Modifier = Modifier, navController: NavController) 
             ),
             border = BorderStroke(1.dp, Color.Black),
             onClick = {
-                navController.navigate("form/$nome")
+                navController.navigate("form")
             }
         ) {
             Text(

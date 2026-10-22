@@ -21,6 +21,7 @@ import androidx.navigation.navArgument
 import com.aulasandroid.quizgame.QuizFormScreen.QuizFormScreen
 import com.aulasandroid.quizgame.QuizHomeScreen.QuizHomeScreen
 import com.aulasandroid.quizgame.QuizResultScreen.QuizResultScreen
+import com.aulasandroid.quizgame.Session.SessionViewModel
 import com.aulasandroid.quizgame.ui.theme.QuizGameTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
             QuizGameTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
+                    val sessionViewModel: SessionViewModel = viewModel()
 
                     NavHost(
                         navController = navController,
@@ -51,46 +53,36 @@ class MainActivity : ComponentActivity() {
                         composable(route = "home") {
                             QuizHomeScreen(
                                 modifier = Modifier.padding(innerPadding),
-                                navController = navController
+                                navController = navController,
+                                sessionViewModel = sessionViewModel
                             )
                         }
 
                         composable(
-                            route = "form/{nome}",
-                            arguments = listOf(
-                                navArgument(name = "nome"){
-                                    type = NavType.StringType
-                                }
-                            )
+                            route = "form",
                         ){
-                            val nome = it.arguments?.getString("nome")
-
                             QuizFormScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController,
-                                nome = nome!!,
+                                sessionViewModel = sessionViewModel,
                                 viewModel = viewModel()
                             )
 
                         }
 
                         composable(
-                            route = "result/{nome}/{acertos}",
+                            route = "result/{acertos}",
                             arguments = listOf(
-                                navArgument(name = "nome"){
-                                    type = NavType.StringType
-                                },
                                 navArgument(name = "acertos"){
                                     type = NavType.IntType
                                 }
                             )
                             ){
-                            val nome = it.arguments?.getString("nome")
                             val acertos = it.arguments?.getInt("acertos")
                             QuizResultScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController,
-                                nome = nome!!,
+                                sessionViewModel = sessionViewModel,
                                 acertos = acertos!!
                             )
                         }

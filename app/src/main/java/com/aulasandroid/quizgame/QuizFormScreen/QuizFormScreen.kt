@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aulasandroid.quizgame.Session.SessionViewModel
 import com.aulasandroid.quizgame.components.CardFormulario
 import com.aulasandroid.quizgame.components.CardPergunta
 import com.aulasandroid.quizgame.components.QuizImagem
@@ -26,9 +27,10 @@ import com.aulasandroid.quizgame.components.QuizImagem
 fun QuizFormScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    nome: String = "",
+    sessionViewModel: SessionViewModel,
     viewModel: QuizFormScreenViewModel
 ){
+    val userName by sessionViewModel.userName.observeAsState("")
     val contadorPerguntas by viewModel.contadorPerguntas.observeAsState(1)
 
     Column(
@@ -43,7 +45,7 @@ fun QuizFormScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Boa sorte $nome!",
+            text = "Boa sorte $userName!",
             color = Color.Black,
             fontSize = 20.sp,
             fontWeight = FontWeight.Black
@@ -90,7 +92,7 @@ fun QuizFormScreen(
                 )
 
             else ->
-                navController.navigate("result/$nome/${viewModel.contadorAcertos.value}")
+                navController.navigate("result/${viewModel.contadorAcertos.value}")
         }
     }
 }
